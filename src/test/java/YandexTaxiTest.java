@@ -18,23 +18,28 @@ public class YandexTaxiTest {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.get("https://taxi.yandex.ru/#index");
     }
 
     @Test
     public void inputAddressFromTest() throws InterruptedException {
-        driver.get("https://taxi.yandex.ru/#index");
         OrderForm orderForm = new OrderForm(driver);
         orderForm.submitButton();
         TimeUnit.SECONDS.sleep(3);
         Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessage());
     }
 
-//    public void inputPhoneNumberTest() throws InterruptedException {
-//        driver.get("https://taxi.yandex.ru/#index");
-//        OrderForm orderForm = new OrderForm(driver);
-//        Address address = Address.createValidAddress();
-//        address.OrderForm.inputAddressFrom();
-//        TimeUnit.SECONDS.sleep(3);
-//        Assert.assertEquals("Ошибка в номере", orderForm.errorMessage());
-//    }
+    @Test
+    public void inputPhoneNumberTest() throws InterruptedException {
+        OrderForm orderForm = new OrderForm(driver);
+        TimeUnit.SECONDS.sleep(3);
+        orderForm.inputAddressFrom("проспект Ленина, 30");
+        TimeUnit.SECONDS.sleep(3);
+        orderForm.submitButton();
+        TimeUnit.SECONDS.sleep(10);
+        orderForm.submitButton();
+        orderForm.submitButton();
+        Assert.assertEquals("Ошибка в номере", orderForm.errorMessage());
+    }
+
 }

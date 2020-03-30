@@ -26,6 +26,9 @@ public class OrderForm {
     @FindBy(className = "popup_type_error")
     public WebElement errorMessage;
 
+//    @FindBy(xpath = "/html/body/div[8]/div[1]")
+//    public WebElement errorMessage;
+
     public OrderForm(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -36,9 +39,9 @@ public class OrderForm {
      * @param address - {@link Address}
      */
 
-    public void inputAddressFrom(Address address) {
-        clearButton.click();
-        addressFrom.sendKeys(address.addressFrom);
+    public void inputAddressFrom(String address) {
+//        clearButton.click();
+       addressFrom.sendKeys(address);
     }
 
     public void inputAddressTo(Address address) {
