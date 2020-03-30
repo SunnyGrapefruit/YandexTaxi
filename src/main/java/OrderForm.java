@@ -23,12 +23,8 @@ public class OrderForm {
     @FindBy(xpath = "/html/body/div[1]/div[4]/div[1]/div[1]/div[2]/div[6]/div[3]/button")
     public WebElement submitButton;
 
-//    @FindBy(className = "popup_type_error")
-//    public WebElement errorMessage;
-
-//    @FindBy(xpath = "/html/body/div[6]/div[2]")
-//    public WebElement errorMessage;
-
+    @FindBy(className = "popup_type_error")
+    public WebElement errorMessage;
 
     public OrderForm(WebDriver driver) {
         this.driver = driver;
@@ -58,8 +54,8 @@ public class OrderForm {
     }
 
     public String errorMessage() {
-        String errorMessage = driver.findElement(By.xpath("/html/body/div[6]/div[2]")).getText();
-        return errorMessage;
+        String errorMess = errorMessage.getText();
+        return errorMess;
     }
 
 }

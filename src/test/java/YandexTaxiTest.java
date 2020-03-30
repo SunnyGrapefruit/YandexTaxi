@@ -21,7 +21,7 @@ public class YandexTaxiTest {
     }
 
     @Test
-    public void registerUserErrorsTest() throws InterruptedException {
+    public void inputAddressFromTest() throws InterruptedException {
         driver.get("https://taxi.yandex.ru/#index");
         OrderForm orderForm = new OrderForm(driver);
         orderForm.submitButton();
@@ -29,5 +29,12 @@ public class YandexTaxiTest {
         Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessage());
     }
 
-
+//    public void inputPhoneNumberTest() throws InterruptedException {
+//        driver.get("https://taxi.yandex.ru/#index");
+//        OrderForm orderForm = new OrderForm(driver);
+//        Address address = Address.createValidAddress();
+//        address.OrderForm.inputAddressFrom();
+//        TimeUnit.SECONDS.sleep(3);
+//        Assert.assertEquals("Ошибка в номере", orderForm.errorMessage());
+//    }
 }
