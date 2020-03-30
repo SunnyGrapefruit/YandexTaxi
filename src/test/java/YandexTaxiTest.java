@@ -21,11 +21,12 @@ public class YandexTaxiTest {
     }
 
     @Test
-    public void registerUserErrorsTest() {
+    public void registerUserErrorsTest() throws InterruptedException {
         driver.get("https://taxi.yandex.ru/#index");
         OrderForm orderForm = new OrderForm(driver);
         orderForm.submitButton();
-        Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessage());
+        TimeUnit.SECONDS.sleep(3);
+        Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessage);
     }
 
 
