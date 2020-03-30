@@ -1,3 +1,4 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,8 +26,9 @@ public class OrderForm {
 //    @FindBy(className = "popup_type_error")
 //    public WebElement errorMessage;
 
-    @FindBy(xpath = "/html/body/div[6]/div[2]")
-    public WebElement errorMessage;
+//    @FindBy(xpath = "/html/body/div[6]/div[2]")
+//    public WebElement errorMessage;
+
 
     public OrderForm(WebDriver driver) {
         this.driver = driver;
@@ -55,9 +57,9 @@ public class OrderForm {
         submitButton.click();
     }
 
-    public OrderForm errorMessage(String errorMesse) {
-        errorMessage.getText();
-        return this;
+    public String errorMessage() {
+        String errorMessage = driver.findElement(By.xpath("/html/body/div[6]/div[2]")).getText();
+        return errorMessage;
     }
 
 }

@@ -26,7 +26,7 @@ public class YandexTaxiTest {
         OrderForm orderForm = new OrderForm(driver);
         orderForm.submitButton();
         TimeUnit.SECONDS.sleep(3);
-        Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessage);
+        Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessage());
     }
 
 
