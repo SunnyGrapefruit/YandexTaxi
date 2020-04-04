@@ -15,7 +15,7 @@ public class YandexTaxiTest {
 
     @Before
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "config\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("https://taxi.yandex.ru/#index");
@@ -49,4 +49,28 @@ public class YandexTaxiTest {
         wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
         Assert.assertEquals("Ошибка в номере", orderForm.errorMessageVoid());
     }
+
+    @Test
+    public void correctTest() throws InterruptedException {
+        OrderForm orderForm = new OrderForm(driver);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        orderForm.clearButtonVoid();
+        orderForm.inputAddressFrom("проспект Ленина, 30");
+        orderForm.inputPhoneNumber("+79099435267");
+        orderForm.submitButtonVoid();
+    }
+
+    @Test
+    public void correctTestSecond() throws InterruptedException {
+        OrderForm orderForm = new OrderForm(driver);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        orderForm.clearButtonVoid();
+        orderForm.inputAddressFrom("проспект Ленина, 30");
+        orderForm.inputAddressTo("проспект Мира, 30");
+        orderForm.inputPhoneNumber("+79099435267");
+        TimeUnit.SECONDS.sleep(5);
+        orderForm.submitButtonVoid();
+    }
+
+
 }

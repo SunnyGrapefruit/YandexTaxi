@@ -16,6 +16,9 @@ public class ConfirmForm {
     @FindBy(xpath = "/html/body/div[1]/div[5]/div/div/div/div[3]/div[2]/button")
     public WebElement cancelButton;
 
+    @FindBy(xpath = "/html/body/div[1]/div[5]/div/div/div/div[4]/span")
+    public WebElement sendAgainButton;
+
     public ConfirmForm(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
@@ -37,4 +40,9 @@ public class ConfirmForm {
     public void cancelButtonVoid() {
         cancelButton.click();
     }
+
+    public void sendAgainVoid() {
+        sendAgainButton.click();
+    }
+
 }

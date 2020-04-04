@@ -13,6 +13,9 @@ public class OrderForm {
     @FindBy(id = "addressTo")
     public WebElement addressTo;
 
+//    @FindBy(xpath = "//*[@id=\"addressTo\"]")
+//    public WebElement addressTo;
+
     @FindBy(id = "phoneNumber")
     public WebElement phoneNumber;
 
@@ -31,21 +34,26 @@ public class OrderForm {
         PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Ввести адрес
-     * @param address - {@link Address}
-     */
+//    /**
+//     * Ввести адрес
+//     * @param address - {@link Address}
+//     */
 
     public void inputAddressFrom(String address) {
        addressFrom.sendKeys(address);
     }
 
-    public void inputAddressTo(Address address) {
-        addressTo.sendKeys(address.addressTo);
+    public void inputAddressTo(String address) {
+        addressTo.sendKeys(address);
     }
 
-    public void inputPhoneNumber(Address address) {
-        phoneNumber.sendKeys(address.phoneNumber);
+//    public void inputAddressTo() {
+//        Address address = new Address();
+//        addressTo.sendKeys(address.addressTo);
+//    }
+
+    public void inputPhoneNumber(String number) {
+        phoneNumber.sendKeys(number);
     }
 
     public void submitButtonVoid() {
