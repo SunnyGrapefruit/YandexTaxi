@@ -1,4 +1,3 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,16 +7,16 @@ public class OrderForm {
 
     private WebDriver driver;
 
-    @FindBy(xpath = "//*[@id=\"addressFrom\"]")
+    @FindBy(id = "addressFrom")
     public WebElement addressFrom;
 
-    @FindBy(xpath = "//*[@id=\"addressTo\"]")
+    @FindBy(id = "addressTo")
     public WebElement addressTo;
 
-    @FindBy(xpath = "//*[@id=\"phoneNumber\"]")
+    @FindBy(id = "phoneNumber")
     public WebElement phoneNumber;
 
-    @FindBy(xpath = "/html/body/div[1]/div[4]/div[1]/div[1]/div[2]/div[1]/div/div[1]/span/span[1]/span[2]")
+    @FindBy(css = "span.input__clear")
     public WebElement clearButton;
 
     @FindBy(xpath = "/html/body/div[1]/div[4]/div[1]/div[1]/div[2]/div[6]/div[3]/button")
@@ -26,8 +25,6 @@ public class OrderForm {
     @FindBy(className = "popup_type_error")
     public WebElement errorMessage;
 
-//    @FindBy(xpath = "/html/body/div[8]/div[1]")
-//    public WebElement errorMessage;
 
     public OrderForm(WebDriver driver) {
         this.driver = driver;
@@ -40,7 +37,6 @@ public class OrderForm {
      */
 
     public void inputAddressFrom(String address) {
-//        clearButton.click();
        addressFrom.sendKeys(address);
     }
 
@@ -52,11 +48,15 @@ public class OrderForm {
         phoneNumber.sendKeys(address.phoneNumber);
     }
 
-    public void submitButton() {
+    public void submitButtonVoid() {
         submitButton.click();
     }
 
-    public String errorMessage() {
+    public void clearButtonVoid() {
+        clearButton.click();
+    }
+
+    public String errorMessageVoid() {
         String errorMess = errorMessage.getText();
         return errorMess;
     }

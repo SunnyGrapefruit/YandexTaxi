@@ -2,10 +2,10 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.concurrent.TimeUnit;
 
 
@@ -21,25 +21,32 @@ public class YandexTaxiTest {
         driver.get("https://taxi.yandex.ru/#index");
     }
 
+    @After
+    public void tearDown() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(5);
+        driver.quit();
+    }
+
     @Test
     public void inputAddressFromTest() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 3);
         OrderForm orderForm = new OrderForm(driver);
-        orderForm.submitButton();
-        TimeUnit.SECONDS.sleep(3);
-        Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessage());
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        orderForm.clearButtonVoid();
+        orderForm.submitButtonVoid();
+        wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
+        Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessageVoid());
     }
 
     @Test
     public void inputPhoneNumberTest() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 3);
         OrderForm orderForm = new OrderForm(driver);
-        TimeUnit.SECONDS.sleep(3);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        orderForm.clearButtonVoid();
         orderForm.inputAddressFrom("проспект Ленина, 30");
-        TimeUnit.SECONDS.sleep(3);
-        orderForm.submitButton();
-        TimeUnit.SECONDS.sleep(10);
-        orderForm.submitButton();
-        orderForm.submitButton();
-        Assert.assertEquals("Ошибка в номере", orderForm.errorMessage());
+        orderForm.submitButtonVoid();
+        wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
+        Assert.assertEquals("Ошибка в номере", orderForm.errorMessageVoid());
     }
-
 }
