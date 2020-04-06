@@ -1,7 +1,12 @@
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
 
 public class OrderForm {
 
@@ -13,8 +18,11 @@ public class OrderForm {
     @FindBy(id = "addressTo")
     public WebElement addressTo;
 
-//    @FindBy(xpath = "//*[@id=\"addressTo\"]")
-//    public WebElement addressTo;
+    @FindBy(xpath = "/html/body/div[6]/div/ul/li[1]")
+    public WebElement listFrom;
+
+    @FindBy(xpath = "/html/body/div[8]/div/ul/li[1]")
+    public WebElement listTo;
 
     @FindBy(id = "phoneNumber")
     public WebElement phoneNumber;
@@ -22,7 +30,7 @@ public class OrderForm {
     @FindBy(css = "span.input__clear")
     public WebElement clearButton;
 
-    @FindBy(xpath = "/html/body/div[1]/div[4]/div[1]/div[1]/div[2]/div[6]/div[3]/button")
+    @FindBy(className = "js-order-button")
     public WebElement submitButton;
 
     @FindBy(className = "popup_type_error")
@@ -34,29 +42,29 @@ public class OrderForm {
         PageFactory.initElements(driver, this);
     }
 
-//    /**
-//     * Ввести адрес
-//     * @param address - {@link Address}
-//     */
+    public void inputAddressFrom(String address){
+//        WebDriverWait wait = new WebDriverWait(driver, 5);
+//        addressFrom.click();
 
-    public void inputAddressFrom(String address) {
-       addressFrom.sendKeys(address);
+        addressFrom.sendKeys(address);
+
+//        wait.until(ExpectedConditions.visibilityOf(inputAddressFrom));
+//        new Actions(driver).moveToElement(inputAddressFrom).perform();
+
+        listFrom.click();
     }
 
     public void inputAddressTo(String address) {
         addressTo.sendKeys(address);
+        listTo.click();
     }
-
-//    public void inputAddressTo() {
-//        Address address = new Address();
-//        addressTo.sendKeys(address.addressTo);
-//    }
 
     public void inputPhoneNumber(String number) {
         phoneNumber.sendKeys(number);
     }
 
     public void submitButtonVoid() {
+        new Actions(driver).moveToElement(submitButton).perform();
         submitButton.click();
     }
 

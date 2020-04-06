@@ -24,13 +24,8 @@ public class ConfirmForm {
         PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Ввести адрес
-     * @param address - {@link Address}
-     */
-
-    public void inputCodeVoid(Address address) {
-        inputCode.sendKeys(address.phoneNumber);
+    public void inputCodeVoid(String code) {
+        inputCode.sendKeys(code);
     }
 
     public void confirmButtonVoid() {
