@@ -45,12 +45,9 @@ public class OrderForm {
     public void inputAddressFrom(String address){
 //        WebDriverWait wait = new WebDriverWait(driver, 5);
 //        addressFrom.click();
-
         addressFrom.sendKeys(address);
-
 //        wait.until(ExpectedConditions.visibilityOf(inputAddressFrom));
 //        new Actions(driver).moveToElement(inputAddressFrom).perform();
-
         listFrom.click();
     }
 

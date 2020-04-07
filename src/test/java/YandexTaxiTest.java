@@ -74,7 +74,6 @@ public class YandexTaxiTest {
         TimeUnit.SECONDS.sleep(3);
     }
 
-
     @Test
     public void correctTestFromTo(){
         OrderForm orderForm = new OrderForm(driver);
@@ -96,20 +95,20 @@ public class YandexTaxiTest {
         Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessageVoid());
     }
 
-    @Test
+    @Test  //org.openqa.selenium.ElementNotInteractableException: element not interactable
     public void correctCodeInput() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         CorrectTestFrom();
         OrderForm orderForm = new OrderForm(driver);
 
-        wait.until(ExpectedConditions.visibilityOf(orderForm.block));
+//        wait.until(ExpectedConditions.visibilityOf(orderForm.block));
         new Actions(driver).moveToElement(orderForm.inputCode).click();
-        new Actions(driver).moveToElement(orderForm.inputHoveredCode).click();
-        new Actions(driver).moveToElement(orderForm.inputFocusCode).perform();
+//        new Actions(driver).moveToElement(orderForm.inputHoveredCode).click();
+//        new Actions(driver).moveToElement(orderForm.inputFocusCode).perform();
 //        new Actions(driver).moveToElement(orderForm.block).perform();
 //        orderForm.inputCode.click();
 
-        orderForm.inputFocusCode.sendKeys("256");
+        orderForm.inputCode.sendKeys("256");
 
 //        confirmForm.inputCodeVoid("123");
 //        confirmForm.confirmButtonVoid();
@@ -120,8 +119,8 @@ public class YandexTaxiTest {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         CorrectTestFrom();
         ConfirmForm confirmForm = new ConfirmForm(driver);
-        TimeUnit.SECONDS.sleep(5);
+        OrderForm orderForm = new OrderForm(driver);
         confirmForm.cancelButtonVoid();
-
+        wait.until(ExpectedConditions.visibilityOf(orderForm.addressFrom));
     }
 }
