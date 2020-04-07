@@ -65,23 +65,26 @@ public class YandexTaxiTest {
     }
 
     @Test
-    public void CorrectTestFrom() throws InterruptedException {
+    public void CorrectTestFrom(){
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-//        orderForm.clearButtonVoid();
+        ConfirmForm confirmForm = new ConfirmForm(driver);
         orderForm.inputAddressFrom("проспект Ленина, 30");
         orderForm.inputPhoneNumber("+79999435267");
         orderForm.submitButtonVoid();
-        TimeUnit.SECONDS.sleep(3);
+        wait.until(ExpectedConditions.visibilityOf(confirmForm.confirmButton));
     }
 
     @Test
     public void correctTestFromTo(){
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-//        orderForm.clearButtonVoid();
+        ConfirmForm confirmForm = new ConfirmForm(driver);
         orderForm.inputAddressFrom("проспект Ленина, 30");
         orderForm.inputAddressTo("проспект Мира, 30");
         orderForm.inputPhoneNumber("+79999435267");
         orderForm.submitButtonVoid();
+        wait.until(ExpectedConditions.visibilityOf(confirmForm.confirmButton));
     }
 
     @Test
@@ -99,23 +102,21 @@ public class YandexTaxiTest {
     public void correctCodeInput() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         CorrectTestFrom();
-        OrderForm orderForm = new OrderForm(driver);
+        ConfirmForm confirmForm = new ConfirmForm(driver);
 
 //        wait.until(ExpectedConditions.visibilityOf(orderForm.block));
-        new Actions(driver).moveToElement(orderForm.inputCode).click();
+        new Actions(driver).moveToElement(confirmForm.inputCode).click();
 //        new Actions(driver).moveToElement(orderForm.inputHoveredCode).click();
 //        new Actions(driver).moveToElement(orderForm.inputFocusCode).perform();
 //        new Actions(driver).moveToElement(orderForm.block).perform();
 //        orderForm.inputCode.click();
-
-        orderForm.inputCode.sendKeys("256");
-
+        confirmForm.inputCode.sendKeys("256");
 //        confirmForm.inputCodeVoid("123");
 //        confirmForm.confirmButtonVoid();
     }
 
     @Test
-    public void cancelOrder() throws InterruptedException {
+    public void cancelOrder() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         CorrectTestFrom();
         ConfirmForm confirmForm = new ConfirmForm(driver);

@@ -4,6 +4,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.concurrent.TimeUnit;
@@ -43,12 +44,15 @@ public class OrderForm {
     }
 
     public void inputAddressFrom(String address){
-//        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
 //        addressFrom.click();
+
         addressFrom.sendKeys(address);
-//        wait.until(ExpectedConditions.visibilityOf(inputAddressFrom));
+//        wait.until(ExpectedConditions.visibilityOf(listFrom));
+//        Select select = new Select(listFrom);
+//        select.selectByIndex(0);
 //        new Actions(driver).moveToElement(inputAddressFrom).perform();
-        listFrom.click();
+       listFrom.click();
     }
 
     public void inputAddressTo(String address) {
@@ -73,17 +77,5 @@ public class OrderForm {
         String errorMess = errorMessage.getText();
         return errorMess;
     }
-
-    @FindBy(className = "input_js_inited")
-    public WebElement inputCode;
-
-    @FindBy(className = "input_hovered_yes")
-    public WebElement inputHoveredCode;
-
-    @FindBy(className = "input_focused_yes")
-    public WebElement inputFocusCode;
-
-    @FindBy(className = "input")
-    public WebElement block;
 
 }
