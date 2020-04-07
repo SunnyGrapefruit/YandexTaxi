@@ -77,4 +77,16 @@ public class OrderForm {
         return errorMess;
     }
 
+    @FindBy(className = "input_js_inited")
+    public WebElement inputCode;
+
+    @FindBy(className = "input_hovered_yes")
+    public WebElement inputHoveredCode;
+
+    @FindBy(className = "input_focused_yes")
+    public WebElement inputFocusCode;
+
+    @FindBy(className = "input")
+    public WebElement block;
+
 }

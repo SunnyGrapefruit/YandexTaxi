@@ -16,6 +16,7 @@ public class YandexTaxiTest {
 
     public static WebDriver driver;
 
+
     @Before
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "config\\chromedriver.exe");
@@ -31,20 +32,20 @@ public class YandexTaxiTest {
     }
 
     @Test
-    public void inputAddressFromTest() throws InterruptedException {
+    public void EmptyAddressFromTest() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-        orderForm.clearButtonVoid();
+//        orderForm.clearButtonVoid();
         orderForm.submitButtonVoid();
         wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
         Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessageVoid());
     }
 
     @Test
-    public void inputPhoneNumberTest() throws InterruptedException {
+    public void EmptyPhoneNumberTest(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-        orderForm.clearButtonVoid();
+//        orderForm.clearButtonVoid();
         orderForm.inputAddressFrom("проспект Ленина, 33");
         orderForm.submitButtonVoid();
         wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
@@ -52,33 +53,75 @@ public class YandexTaxiTest {
     }
 
     @Test
-    public void correctTestFrom() throws InterruptedException {
-        OrderForm orderForm = new OrderForm(driver);
-        orderForm.clearButtonVoid();
-        orderForm.inputAddressFrom("проспект Ленина, 30");
-        orderForm.inputPhoneNumber("+79099435267");
-        orderForm.submitButtonVoid();
-    }
-
-    @Test
-    public void correctTestFromTo() throws InterruptedException {
-        OrderForm orderForm = new OrderForm(driver);
-        orderForm.clearButtonVoid();
-        orderForm.inputAddressFrom("проспект Ленина, 30");
-        orderForm.inputAddressTo("проспект Мира, 30");
-        orderForm.inputPhoneNumber("+79099435267");
-        orderForm.submitButtonVoid();
-    }
-
-    @Test
-    public void correctTestTo() throws InterruptedException {
+    public void UncorrectPhoneNumberTest(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-        orderForm.clearButtonVoid();
+//        orderForm.clearButtonVoid();
+        orderForm.inputAddressFrom("проспект Ленина, 30");
+        orderForm.inputPhoneNumber("+19099435267");
+        orderForm.submitButtonVoid();
+        wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
+        Assert.assertEquals("Сервис недоступен для Вашего региона. Укажите другой номер.", orderForm.errorMessageVoid());
+    }
+
+    @Test
+    public void CorrectTestFrom() throws InterruptedException {
+        OrderForm orderForm = new OrderForm(driver);
+//        orderForm.clearButtonVoid();
+        orderForm.inputAddressFrom("проспект Ленина, 30");
+        orderForm.inputPhoneNumber("+79999435267");
+        orderForm.submitButtonVoid();
+        TimeUnit.SECONDS.sleep(3);
+    }
+
+
+    @Test
+    public void correctTestFromTo(){
+        OrderForm orderForm = new OrderForm(driver);
+//        orderForm.clearButtonVoid();
+        orderForm.inputAddressFrom("проспект Ленина, 30");
+        orderForm.inputAddressTo("проспект Мира, 30");
+        orderForm.inputPhoneNumber("+79999435267");
+        orderForm.submitButtonVoid();
+    }
+
+    @Test
+    public void correctTestTo() {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        OrderForm orderForm = new OrderForm(driver);
+//        orderForm.clearButtonVoid();
         orderForm.inputAddressTo("проспект Мира, 30");
         orderForm.submitButtonVoid();
         wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
         Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessageVoid());
     }
 
+    @Test
+    public void correctCodeInput() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        CorrectTestFrom();
+        OrderForm orderForm = new OrderForm(driver);
+
+        wait.until(ExpectedConditions.visibilityOf(orderForm.block));
+        new Actions(driver).moveToElement(orderForm.inputCode).click();
+        new Actions(driver).moveToElement(orderForm.inputHoveredCode).click();
+        new Actions(driver).moveToElement(orderForm.inputFocusCode).perform();
+//        new Actions(driver).moveToElement(orderForm.block).perform();
+//        orderForm.inputCode.click();
+
+        orderForm.inputFocusCode.sendKeys("256");
+
+//        confirmForm.inputCodeVoid("123");
+//        confirmForm.confirmButtonVoid();
+    }
+
+    @Test
+    public void cancelOrder() throws InterruptedException {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        CorrectTestFrom();
+        ConfirmForm confirmForm = new ConfirmForm(driver);
+        TimeUnit.SECONDS.sleep(5);
+        confirmForm.cancelButtonVoid();
+
+    }
 }
