@@ -17,7 +17,6 @@ public class YandexTaxiTest {
 
     public static WebDriver driver;
 
-
     @Before
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "config\\chromedriver.exe");
