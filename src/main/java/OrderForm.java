@@ -1,13 +1,12 @@
+import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
 
 public class OrderForm {
 
@@ -19,11 +18,14 @@ public class OrderForm {
     @FindBy(id = "addressTo")
     public WebElement addressTo;
 
-    @FindBy(xpath = "/html/body/div[6]/div/ul/li[1]")
-    public WebElement listFrom;
+    @FindBy(className = "button_action_demo")
+    public WebElement demoButton;
 
-    @FindBy(xpath = "/html/body/div[8]/div/ul/li[1]")
-    public WebElement listTo;
+    @FindBy(css = ".input__popup_fade_yes.popup")
+    public WebElement popupList;
+
+    @FindBy(xpath = "//div[text()=\"Определяем адрес\"]")
+    public WebElement popupCheckAddress;
 
     @FindBy(id = "phoneNumber")
     public WebElement phoneNumber;
@@ -45,19 +47,18 @@ public class OrderForm {
 
     public void inputAddressFrom(String address){
         WebDriverWait wait = new WebDriverWait(driver, 5);
-//        addressFrom.click();
-
         addressFrom.sendKeys(address);
-//        wait.until(ExpectedConditions.visibilityOf(listFrom));
-//        Select select = new Select(listFrom);
-//        select.selectByIndex(0);
-//        new Actions(driver).moveToElement(inputAddressFrom).perform();
-       listFrom.click();
+        WebElement element = wait.until(ExpectedConditions.visibilityOf(popupList));
+        Assert.assertNotNull(element);
+        Assert.assertTrue(element.isDisplayed());
     }
 
     public void inputAddressTo(String address) {
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         addressTo.sendKeys(address);
-        listTo.click();
+        WebElement element = wait.until(ExpectedConditions.visibilityOf(popupList));
+        Assert.assertNotNull(element);
+        Assert.assertTrue(element.isDisplayed());
     }
 
     public void inputPhoneNumber(String number) {
@@ -65,8 +66,10 @@ public class OrderForm {
     }
 
     public void submitButtonVoid() {
-        new Actions(driver).moveToElement(submitButton).perform();
-        submitButton.click();
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        wait.until(ExpectedConditions.and(
+                ExpectedConditions.visibilityOf(demoButton)));
+        new Actions(driver).moveToElement(submitButton).click().perform();
     }
 
     public void clearButtonVoid() {
@@ -74,8 +77,9 @@ public class OrderForm {
     }
 
     public String errorMessageVoid() {
-        String errorMess = errorMessage.getText();
-        return errorMess;
+        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebElement element = wait.until(ExpectedConditions.visibilityOf(errorMessage));
+        return element.getText();
     }
 
 }

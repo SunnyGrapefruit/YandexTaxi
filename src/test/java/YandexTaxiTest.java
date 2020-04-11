@@ -3,6 +3,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -35,7 +36,6 @@ public class YandexTaxiTest {
     public void EmptyAddressFromTest() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-//        orderForm.clearButtonVoid();
         orderForm.submitButtonVoid();
         wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
         Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessageVoid());
@@ -45,7 +45,6 @@ public class YandexTaxiTest {
     public void EmptyPhoneNumberTest(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-//        orderForm.clearButtonVoid();
         orderForm.inputAddressFrom("проспект Ленина, 33");
         orderForm.submitButtonVoid();
         wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
@@ -56,7 +55,6 @@ public class YandexTaxiTest {
     public void UncorrectPhoneNumberTest(){
         WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-//        orderForm.clearButtonVoid();
         orderForm.inputAddressFrom("проспект Ленина, 30");
         orderForm.inputPhoneNumber("+19099435267");
         orderForm.submitButtonVoid();
@@ -91,28 +89,20 @@ public class YandexTaxiTest {
     public void correctTestTo() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         OrderForm orderForm = new OrderForm(driver);
-//        orderForm.clearButtonVoid();
         orderForm.inputAddressTo("проспект Мира, 30");
         orderForm.submitButtonVoid();
         wait.until(ExpectedConditions.visibilityOf(orderForm.errorMessage));
         Assert.assertEquals("Пожалуйста, укажите адрес подачи такси", orderForm.errorMessageVoid());
     }
 
-    @Test  //org.openqa.selenium.ElementNotInteractableException: element not interactable
+    @Test
     public void correctCodeInput() throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         CorrectTestFrom();
         ConfirmForm confirmForm = new ConfirmForm(driver);
-
-//        wait.until(ExpectedConditions.visibilityOf(orderForm.block));
-        new Actions(driver).moveToElement(confirmForm.inputCode).click();
-//        new Actions(driver).moveToElement(orderForm.inputHoveredCode).click();
-//        new Actions(driver).moveToElement(orderForm.inputFocusCode).perform();
-//        new Actions(driver).moveToElement(orderForm.block).perform();
-//        orderForm.inputCode.click();
+        wait.until(ExpectedConditions.elementToBeClickable(confirmForm.inputCode));
         confirmForm.inputCode.sendKeys("256");
-//        confirmForm.inputCodeVoid("123");
-//        confirmForm.confirmButtonVoid();
+        confirmForm.confirmButtonVoid();
     }
 
     @Test

@@ -13,7 +13,7 @@ public class ConfirmForm {
 //    @FindBy(className = "input_preset_code")
 //    public WebElement inputCode;
 
-    @FindBy(xpath = "/html/body/div[1]/div[5]/div/div/div/div[3]/div[1]/span/span")
+    @FindBy(css = ".layout_view-name_auth .input__control")
     public WebElement inputCode;
 
 //    @FindBy(xpath = "span.input__box")
